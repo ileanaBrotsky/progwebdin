@@ -1,0 +1,49 @@
+
+body{
+   background-image:url(../imagenes/1.jpg);
+        background-size:cover;
+    animation: movimiento infinite linear alternate;
+    animation-duration: 30s;
+    /*background: linear-gradient(56deg, rgba(29,41,78,1) 0%, rgba(151,181,217,1) 57%;*/
+}
+@keyframes movimiento{
+       from{
+       background-position: top right;
+       } 
+       to{
+           background-position:bottom left;  
+       }
+}
+
+#presentacion{
+    background-color: rgba(245, 241, 241, 0.9);
+}
+.invisible{
+    background-color: rgba(245, 241, 241, 0.9);
+}  
+#tituloPie{
+    font-family: 'Roboto', sans-serif;
+    color: rgb(18, 34, 126);
+    background-color: rgba(245, 241, 241, 0.9);
+}
+#tituloInterface{
+    font-size: 4em;
+    font-family: 'Roboto', sans-serif;
+    font-weight: bolder;
+    color: rgb(18, 34, 126);
+    animation-duration: 8s;
+   
+}
+#subtituloInterface{
+    font-size: 2em;
+    font-family: 'Roboto', sans-serif;
+    --animate-delay: 3s;
+    animation-duration: 5s;
+    font-weight: bolder;
+}
+
+#campoClave{
+    
+    display:none;
+   
+}
