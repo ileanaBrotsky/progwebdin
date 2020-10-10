@@ -10,7 +10,7 @@ include_once("../estructura/cabecera.php");
               <h1 id="tituloInterface" class="text-center animate__animated animate__fadeIn  ">Presentación Trabajo Entregable</h1>
        </div>
        <div class="row col-12 mt-5 mb-5 pt-3 justify-content-center">
-              <h3 id="subtituloInterface" class=" text-primary text-center animate__animated animate__rollIn ">Parte 2</h3>
+              <h3 id="subtituloInterface" class=" text-primary text-center animate__animated animate__rollIn ">Parte 3</h3>
               <!-- relleno para que no se achique tanto el contenedor -->
               <div class="row col-12">
                      <p class="invisible">............</p>

@@ -5,25 +5,37 @@
   <!-- Required meta tags -->
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- CSS PROPIO -->
+  <link rel="stylesheet" href="../css/csspropio.css">
   <!-- Bootstrap CSS -->
   <link rel="stylesheet" href="../css/bootstrap.min.css">
-  <link rel="stylesheet" href="../css/bootstrapValidator.min.css">
-  <!-- extra css -->
-  <link rel="stylesheet" href="../css/csspropio.css">
+  <!-- para contraseña con medidor de seguridad -->
+  <link rel="stylesheet" href="../css/style.css">
+  
   <!-- animaciones -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+  
+  <!-- para contraseña con medidor de seguridad -->
+  <link rel="stylesheet" href="https://www.jqueryscript.net/css/jquerysctipttop.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Muli:400,600&display=swap" >
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/4.3.1/minty/bootstrap.min.css">
+  <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css'>
+  <link rel="stylesheet" href="../css/style.css">
+  
   <!--link de iconos fontawson-->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
   <script src="https://kit.fontawesome.com/efd76e4739.js" crossorigin="anonymous"></script>
   <!--link de iconos fontastic-->
   <link href="https://file.myfontastic.com/5pjGU5njX24UjvLk5pkcgL/icons.css" rel="stylesheet">
   <!--letras-->
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@500&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC&display=swap" rel="stylesheet">
- </head>
+ 
+ 
+  </head>
 
 <!-- imagen del fondo -->
-
-<body background="../imagenes/1.jpg">
+<body background="../imagenes/fondo.jpg">
 
   <!-- navegador-cabecera de arriba tipo fijo  -->
   <nav class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0 shadow">
@@ -38,7 +50,7 @@
     <!-- fila 1 -->
     <div class="row">
       <!-- contenedor del menú al costado de la página -->
-      <nav id="sidebarMenu" class="col-md-2 d-none d-md-block bg-light shadow  rounded sidebar collapse mb-3">
+      <nav id="sidebarMenu" class="col-md-2 d-md-block  shadow  rounded sidebar collapse mb-3">
         <!-- contenedor fijo que ordena los titulos del sidebar -->
         <div class="sidebar-sticky pt-3">
           <!-- icono y link de vuelta al home -->
@@ -50,10 +62,10 @@
               </svg> Inicio</h6></a>
           <!-- titulo de trabajos -->
           <h4 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
-            <strong>Entrega 1/10/2020</strong></h4>
+            <strong>Entrega 9/10/2020</strong></h4>
           <ul class="nav flex-column  mb-2">
             <li class="nav-item mt-3 mb-3">
-              <a class="nav-link" href="../scripts/amarchivo.php">
+              <a class="nav-link" href="../scripts/contenido.php">
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file-text">
                   <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
                   <polyline points="14 2 14 8 20 8"></polyline>
@@ -61,43 +73,15 @@
                   <line x1="16" y1="17" x2="8" y2="17"></line>
                   <polyline points="10 9 9 9 8 9"></polyline>
                 </svg>
-                Alta/modificación archivo
+                CONTENIDOS
               </a>
             </li>
             <li class="nav-item mt-3 mb-3">
-              <a class="nav-link" href="../scripts/compartirarchivo.php">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file-text">
-                  <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
-                  <polyline points="14 2 14 8 20 8"></polyline>
-                  <line x1="16" y1="13" x2="8" y2="13"></line>
-                  <line x1="16" y1="17" x2="8" y2="17"></line>
-                  <polyline points="10 9 9 9 8 9"></polyline>
-                </svg>
-                Compartir archivo
-              </a>
-            </li>
-            <li class="nav-item mt-3 mb-3">
-              <a class="nav-link" href="../scripts/eliminararchivocompartido.php">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file-text">
-                  <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
-                  <polyline points="14 2 14 8 20 8"></polyline>
-                  <line x1="16" y1="13" x2="8" y2="13"></line>
-                  <line x1="16" y1="17" x2="8" y2="17"></line>
-                  <polyline points="10 9 9 9 8 9"></polyline>
-                </svg>
-                Eliminar archivo compartido
-              </a>
-            </li>
-            <li class="nav-item mt-3 mb-3">
-              <a class="nav-link" href="../scripts/eliminararchivo.php">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file-text">
-                  <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
-                  <polyline points="14 2 14 8 20 8"></polyline>
-                  <line x1="16" y1="13" x2="8" y2="13"></line>
-                  <line x1="16" y1="17" x2="8" y2="17"></line>
-                  <polyline points="10 9 9 9 8 9"></polyline>
-                </svg>
-                Eliminar archivo
+              <a class="nav-link" href="../scripts/compartidos.php">
+              <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-share-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                  <path fill-rule="evenodd" d="M11 2.5a2.5 2.5 0 1 1 .603 1.628l-6.718 3.12a2.499 2.499 0 0 1 0 1.504l6.718 3.12a2.5 2.5 0 1 1-.488.876l-6.718-3.12a2.5 2.5 0 1 1 0-3.256l6.718-3.12A2.5 2.5 0 0 1 11 2.5z"/>
+                  </svg>
+                ARCHIVOS COMPARTIDOS
               </a>
             </li>
           </ul>

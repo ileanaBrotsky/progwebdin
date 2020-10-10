@@ -1,20 +1,14 @@
+#sidebarMenu{
 
-body{
-   background-image:url(../imagenes/1.jpg);
-        background-size:cover;
-    animation: movimiento infinite linear alternate;
-    animation-duration: 30s;
-    /*background: linear-gradient(56deg, rgba(29,41,78,1) 0%, rgba(151,181,217,1) 57%;*/
+background: linear-gradient(118deg, rgba(255,255,255,0.4430147058823529) 0%, rgba(215,214,212,0.8071603641456583) 100%);
 }
-@keyframes movimiento{
-       from{
-       background-position: top right;
-       } 
-       to{
-           background-position:bottom left;  
-       }
+/*para que el imput number no tenga flechitas*/
+input[type=number]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+  }
+footer{
+    background: linear-gradient(118deg, rgba(255,255,255,0.4430147058823529) 19%, rgba(215,214,212,0.8071603641456583) 100%);
 }
-
 #presentacion{
     background-color: rgba(245, 241, 241, 0.9);
 }
@@ -23,14 +17,14 @@ body{
 }  
 #tituloPie{
     font-family: 'Roboto', sans-serif;
-    color: rgb(18, 34, 126);
-    background-color: rgba(245, 241, 241, 0.9);
+    
+   
 }
 #tituloInterface{
     font-size: 4em;
     font-family: 'Roboto', sans-serif;
     font-weight: bolder;
-    color: rgb(18, 34, 126);
+    color: rgb(120, 194, 173);
     animation-duration: 8s;
    
 }
@@ -42,8 +36,22 @@ body{
     font-weight: bolder;
 }
 
-#campoClave{
-    
+#campoPassword{
     display:none;
-   
+}
+#campoHash{
+    display:none;
+}
+#filaBotones{
+    display:none;
+}
+
+#pb30{
+    display:none;
+}
+#pb60{
+    display:none;
+}
+#pb100{
+    display:none;
 }

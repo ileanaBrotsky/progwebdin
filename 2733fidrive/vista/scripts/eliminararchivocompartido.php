@@ -3,23 +3,26 @@ $Titulo = " eliminararchivocompartido.php";
 include_once("../estructura/cabecera.php");
 
 ?>
+<?php 
+$datos = data_submitted();
+
+//print_r($datos);
+if ($datos!=null){
+   
+    $nombre=$datos["nombreArchivoModalDC"];
+}else{
+   
+    $nombre="1234.png";
+
+}
+?>
 <!--contenedor de todo-->
 <div class="container border bg-white shadow rounded justify-content-center mt-3">
     <!--contenedor de titulo-->
     <div class="nav bg-light shadow mb-3 rounded">
-        <h4 class="text-primary"><i class="far fa-edit"></i> Trabajo Entregable/Parte 2- eliminararchivocompartido.php</h3>
+        <h4 class="text-primary"><i class="far fa-edit"></i> Trabajo Entregable/Parte 3- eliminararchivocompartido.php</h3>
     </div>
-    <!--contenedor de explicacion del ejercicio-->
-    <div class="row col-md-12 text-alignt-center mt-2 mb-1">
-        <h5>Consigna</h5>
-        <p class="font-bold" style="font-family: 'Noto Sans TC', sans-serif">
-            Creamos el archivo eliminararchivocompartido.php para eliminar las opciones de compartir un Archivo.<br>
-            Este archivo debe incluir los archivos: cabedera.php, pie.php y menu.php.<br>
-            Etiqueta que muestra nombre del archivo compartido (Colocar valor por defecto 1234.png).<br>
-            Etiqueta que muestra la cantidad de veces que se compartió.<br>
-            Motivo de ya no compartir el Archivo.
-            Usuario que lo carga (Seleccionar desde un Combo, los usuarios posibles son: admin, visitante, y usted).</p>
-    </div>
+    
     <!--contenedor del Formulario-->
     <div class="container shadow mb-5 rounded  mt-2 p-3">
         <!--Formulario-->
@@ -27,24 +30,30 @@ include_once("../estructura/cabecera.php");
 
             <!--Fila 1 % en  3 col -->
             <div class="form-row ">
-                <!-- columna 1 -Nombre-->
-                <div class="form-group  col-sm p-1 ">
-                    <p class="font-weight-bold">El nombre del archivo compartido es:</p>
-                    <label class=" bg-light shadow-lg rounded p-2 control-label font-weight-bold">1234.png</label>
+                 <!-- columna 1 -Nombre-->
+                 <div class="form-group  col-sm p-1 ">
+                    <label class="control-label font-weight-bold" for="nomarchivo">Nombre del archivo:</label>
+                    <input type="text" readonly class="form-control font-weight-bold bg-light shadow-lg rounded pl-2" id="nomarchivo" name="nomarchivo" value="<?php echo $nombre ?>">
+
                 </div>
                 <!-- columna 2 -dias que se ha compartido-->
                 <div class="form-group  col-sm p-1 ">
-                    <p class="font-weight-bold">El archivo se ha compartido:</p>
-                    <label class="bg-light shadow-lg rounded p-2 control-label font-weight-bold">10 veces</label>
+                <label class="control-label font-weight-bold" for="cantcompartida">El archivo se ha compartido:</label>
+                    <input type="text" readonly class="form-control font-weight-bold bg-light shadow-lg rounded pl-2" id="cantcompartida" name="cantcompartida" value="10 veces">
+                                     
                 </div>
                 <!-- columna 3 -Usuario-->
                 <div class="form-group col-sm p-1 ">
-                    <p class=font-weight-bold>Seleccione el tipo de Usuario</p>
-                    <select class="form-control " id="usuarioeac" name="usuarioeac">
-                        <option>Ileana Brotsky</option>
-                        <option>Administrador</option>
-                        <option>Invitado</option>
+                <label class="control-label font-weight-bold" for="operacion">Seleccione el tipo de Usuario:</label>
+                 <select class="custom-select" id="operacion" name="operacion"required>
+                        <option value="">Elija Usuario</option>    
+                        <option value="Ileana">Ileana Brotsky</option>
+                        <option value="Administrador">Administrador</option>
+                        <option value="Invitado">Invitado</option>
                     </select>
+                     <!-- mensajes para validacion select -->
+                     <div class="invalid-feedback" for="operacion"><br>Elija un usuario.</div>
+                    <div class="valid-feedback" for="operacion"> Perfecto!</div>
                 </div>
             </div>
             <!--Fila 2 Motivo de eliminación-->
@@ -61,7 +70,8 @@ include_once("../estructura/cabecera.php");
             <div class="form-row">
                 <div class="btn-group col-md-1 justify-content-between" role="group">
                     <button type="submit" class="btn btn-primary mr-2">Enviar</button>
-                    <button type="reset" class="btn btn-secondary">Borrar</button>
+                    <button type="reset" class="btn btn-secondary mr-2">Borrar</button>
+                    <button class="btn btn-info" name="boton-volver"  id="boton-volver"><a class="text-decoration-none" href="contenido.php">Volver</a> </button>
                 </div>
             </div>
         </form>

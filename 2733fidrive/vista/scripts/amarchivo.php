@@ -3,52 +3,65 @@ $Titulo = " amarchivo.php";
 include_once("../estructura/cabecera.php");
 
 ?>
+<?php 
+$datos = data_submitted();
+//print_r($datos);
+if ($datos!=null){
+    $clave= $datos["clave"];
+    $nombre=$datos['nombreArchivoModalM'];
+    
+}else{
+    $clave=0;
+    $nombre="";
+
+}
+?>
+
 <!--contenedor de todo-->
 <div class="container border bg-white shadow rounded justify-content-center mt-3">
     <!--contenedor de titulo-->
     <div class="nav bg-light shadow mb-4 rounded">
-        <h4 class="text-primary"><i class="far fa-edit"></i> Trabajo Entregable/Parte 2- amarchivo.php</h3>
+        <h4 class="text-primary"><i class="far fa-edit"></i> Trabajo Entregable/Parte 3- Alta o Modificación de archivo</h3>
     </div>
-    <!--contenedor de explicacion del ejercicio-->
-    <div class="row col-md-12 text-alignt-center mt-2">
-        <h5>Consigna</h5>
-        <p class="font-bold" style="font-family: 'Noto Sans TC', sans-serif">
-            Crear el archivo amarchivo.php para alta o modificación de un Archivo.<br>
-            Debe incluir los archivos: cabecera.php, pie.php y menu.php.
-            Nombre del Archivo (Colocar valor por defecto 1234.png). Descripción del Archivo.
-            Usuario que lo carga (Seleccionar desde un Combo, los usuarios posibles son: admin, visitante, y usted)
-            .Seleccionar Icono que se va a utilizar (Imagen, Zip, Doc, PDF, XLS). Usar CheckBox.
-            Clave del Archivo a modificar. (Este debe ser un campo Oculto).</p>
-    </div>
+
     <!--contenedor del Formulario-->
     <div class="nav shadow mb-5 rounded justify-content-center mt-2 p-3">
         <!--Formulario-->
-        <form class="needs-validation col-12 " id="amformulario" name="amformulario" method="POST" action="modificarArchivo.php" novalidate>
-            <!--Fila 1 % en 2 col-->
+        <form class="needs-validation col-12 " id="amformulario" name="amformulario" method="POST" action="actionAMarchivo.php" enctype="multipart/form-data"  novalidate>
+            <!--Fila 1 subir archivo-->
+            <div class="form-row ">
+                <input type="file" class=" col-4" id="archivo" onchange="setearNombre()" name="archivo" accept="image/*,.zip,.pdf,.doc,.docx,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document"> 
+            </div> 
+            <!--Fila 2 % en 2 col-->
             <div class="form-row ">
                 <!-- columna 1 -Nombre-->
                 <div class="form-group  col-md-6">
                     <label class="control-label font-weight-bold" for="nombrearchivo">Nombre del archivo:</label>
-                    <input type="text" class="form-control font-weight-light" value="1234.png" id="nombrearchivo" name="nombrearchivo" required>
-                    <div class="valid-feedback" for="nombrearchivo"> Perfecto!</div>
-                    <div class="invalid-feedback" for="nombrearchivo">Debe completar el campo.</div>
-                </div>
-                <!-- columna 2 -clave archivo-->
+                    <input type="text" class="form-control font-weight-light" id="nombrearchivo"  name="nombrearchivo"  value="<?php echo $nombre ?>" onchange="sugerirRadio()" readonly>
+                 </div>
+                <!-- columna 2 tipo de usuario -->
                 <div class="form-group col-md-6">
-                    <label class="control-label font-weight-bold" for="clave">Clave del archivo:</label>
-                    <input type="password" class="form-control font-weight-light" id="clave" name="clave" required>
-                    <div class="valid-feedback" for="clave"> Perfecto!</div>
-                    <div class="invalid-feedback" for="clave">Debe completar el campo.</div>
+                <label class="control-label font-weight-bold" for="usuario">Seleccione el tipo de Usuario:</label>
+                    <select class="custom-select" id="usuario" name="usuario" required>
+                        <option value="">Elija Usuario</option>
+                        <option value="Ileana Brotsky">Ileana Brotsky</option>
+                        <option value="Administrador">Administrador</option>
+                        <option value="Invitado">Invitado</option>
+                    </select>
+                    <!-- mensajes para validacion select -->
+                    <div class="invalid-feedback" for="usuario"><br>Elija un usuario.</div>
+                    <div class="valid-feedback" for="usuario"> Perfecto!</div>
                 </div>
+
             </div>
             <!-- Fila 2 % en 2 ol -->
             <div class="form-row ">
                 <!-- columna 1 tipo de archivos -->
-                <div class="form-group col-md-6">
+                <div class="form-group col-md-6 ">
                     <p class=font-weight-bold>Seleccione el tipo de archivo</p>
                     <!--grupo radio-button 1 imagen-->
                     <div class="custom-control custom-radio custom-control-inline">
-                        <input type="radio" id="imagen" name="tipoarchivo" value="imagen" class="custom-control-input" required>
+                        <input type="radio" id="imagen" name="tipoarchivo" value="Imagen" class="custom-control-input" required>
                         <label class="custom-control-label" for="imagen">Imagen</label>
                     </div>
                     <!--grupo radio-button 2 Zip-->
@@ -75,38 +88,42 @@ include_once("../estructura/cabecera.php");
                     <div class="invalid-feedback" for="tipoarchivo"><br>Debe completar al menos un campo.</div>
                     <div class="valid-feedback" for="tipoarchivo"> Perfecto!</div>
                 </div>
-
-                <!-- columna 2 tipo de usuario -->
+                <!-- columna 2 -clave archivo-->
                 <div class="form-group col-md-6">
-                    <p class=font-weight-bold>Seleccione el tipo de Usuario</p>
-                    <select class="form-control" id="operacion" name="operacion">
-                        <option>Ileana Brotsky</option>
-                        <option>Administrador</option>
-                        <option>Invitado</option>
-                    </select>
+                    <!--  <label class="control-label font-weight-bold" for="clave">Clave del archivo:</label> -->
+                    <input type="hidden" class="form-control font-weight-light " id="clave" name="clave" value="<?php echo $clave ?>">
+                    <!--   <div class="small form-text text-muted" for="decargasposibles"> 0 = Alta / 1= Modificación</div>-->
                 </div>
+
             </div>
             <!--Fila 3 descripcion archivo-->
             <div class="form-row ">
                 <div class="form-group col-md-12">
                     <label class="control-label font-weight-bold" for="descripcion">Descripción del archivo: </label>
-                    <textarea class="form-control font-weight-light text-wrap" rows="3" id="descripcion" name="descripcion" required></textarea>
+                    <!--  del editor enriqeucido-->
+                    <textarea name="editor1">
+                        
+                        <p>Esta es una descripción genérica, si quiere puede cambiarla.</p>
+                        </textarea>
+                    </div>
                     <div class="valid-feedback" for="descripcion"> Perfecto!</div>
                     <div class="invalid-feedback" for="descripcion">Debe completar el campo.</div>
                 </div>
-            </div>
+            
 
-            <!--Fila 5 del botón-->
-            <!--Fila 5 grupo de botones-->
+
+            <!--Fila 4 grupo de botones-->
             <div class="form-row">
                 <div class="btn-group col-md-1 justify-content-between" role="group">
-                    <button type="submit" class="btn btn-primary mr-2">Enviar</button>
-                    <button type="reset" class="btn btn-secondary">Borrar</button>
+                    <button type="submit" class="btn btn-primary mr-2"  name="boton-enviaram" id="boton-enviaram">Enviar</button>
+                    <button type="reset" class="btn btn-secondary mr-2"  name="boton-borraram"  id="boton-borraram">Borrar</button>
+                    <button class="btn btn-info" name="boton-volver"  id="boton-volver"><a class="text-decoration-none" href="contenido.php">Volver</a> </button>
                 </div>
             </div>
         </form>
     </div>
 </div>
+
 
 <?php
 
