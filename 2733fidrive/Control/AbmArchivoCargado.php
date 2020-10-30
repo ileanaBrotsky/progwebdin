@@ -64,6 +64,7 @@ class AbmArchivoCargado{
      * @return boolean
      */
     public function alta($param){
+       // print_r($param);
         $resp = false;
         $param['idarchivocargado'] =null;
         //Creo objeto con los datos
@@ -86,28 +87,31 @@ class AbmArchivoCargado{
      * @return boolean
      */
         public function altaArchivocargadoEstado($datos){
-            print_r($datos);
+        //print_r($datos);
+        /*Array ( [acnombre] => horario 2020.xlsx [diascompartido] => null [accantidaddescarga] => null [idusuario] => 2 [acprotegidoclave] => null [aclinkacceso] => -1001055095 [idarchivocargado] => 94 [clave] => 3 [descripcion] =>
+        Esta es una desccripción genérica, si quiere puede cambiarla
+        [acicono] => XLS*/
         $resp=false;
         $fechahoy=date("Y-m-d h:i:s");
-        $descrip= "Archivo probando";
-        $idEstadoTipo=1;
-       /* $objetoEstadoTipos= new AbmEstadoTipos;
-        $idEstadoTipo = $objetoEstadoTipos->buscarEstado($datos);
-        if($idEstadoTipo == 1){
+       
+        if( $datos['clave']== 0){
+            $idEstadoTipo=1;
             $descrip= "Archivo Cargado";
         }
-        if($idEstadoTipo == 2){
+        if( $datos['clave']== 2){
+            $idEstadoTipo=4;
+            $descrip= "Archivo Eliminado";
+        }
+        if( $datos['clave']== 3){
+            $idEstadoTipo=2;
             $descrip= "Archivo Compartido";
         }
-        if($idEstadoTipo == 3){
+        if( $datos['clave']== 4){
+            $idEstadoTipo=3;
             $descrip= "Archivo No compartido";
         }
-        if($idEstadoTipo == 4){
-            $descrip= "Archivo eliminado";
-        }*/
-        /*f( array_key_exists('idarchivocargadoestado',$param) and array_key_exists('idestadotipos',$param) and array_key_exists('acedescripcion',$param)
-        and array_key_exists('idusuario',$param)and array_key_exists('acefechaingreso',$param)and array_key_exists('acefechafin',$param)
-        and array_key_exists('idarchivocargado',$param)){*/
+       
+        
         
         $datosEstado= ['idarchivocargadoestado'=>"", 'idestadotipos'=>$idEstadoTipo, 'acedescripcion'=>$descrip,'idusuario'=>$datos['idusuario'], 'acefechaingreso'=>$fechahoy,'acefechafin'=>NULL,'idarchivocargado'=>$datos['idarchivocargado']];
         //print_r($datosEstado);
@@ -198,7 +202,7 @@ class AbmArchivoCargado{
         $resp = false;
         if ($this->seteadosCamposClaves($param)){
             $elObjtArchivo = $this->cargarObjeto($param);
-            print_r($elObjtArchivo );
+            //print_r($elObjtArchivo );
             if($elObjtArchivo!=null and $elObjtArchivo->modificar()){
                 $resp = true;
             }
@@ -298,7 +302,7 @@ class AbmArchivoCargado{
                 $objArchivo = $listaArchivos[0];
                //  print_r($objArchivo);
                $objArchivo->setACDescrip($descrip);
-               $objArchivo->setObjUsuario()->setIdUsuario($usuario);
+               $objArchivo->getObjUsuario()->setIdUsuario($usuario);
                if( $objArchivo->modificar()){
                 $resp=true;
             }

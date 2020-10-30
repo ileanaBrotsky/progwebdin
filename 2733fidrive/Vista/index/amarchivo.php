@@ -18,7 +18,7 @@ if (isset($datos['idarchivocargado'])) {
            //print_r($objArchivo);
         $nombre = $objArchivo->getACNombre();
         $icono = $objArchivo->getACIcono();
-        $usuario = $objArchivo->getIdUsuario();
+        $usuario = $objArchivo->getObjUsuario()->getIdUsuario();
         $descrip = $objArchivo->getACDescrip();
         $clave = 1;
         $idArchivo = $datos['idarchivocargado'];

@@ -5,7 +5,7 @@ header ("Cache-Control: no-cache, must-revalidate ");*/
 // CONFIGURACION APP//
 /////////////////////////////
 
-$PROYECTO ='progwebdin/Entrega4';
+$PROYECTO ='progwebdin/2733fidrive';
 
 //variable que almacena el directorio del proyecto
 $ROOT =$_SERVER['DOCUMENT_ROOT']."/$PROYECTO/";

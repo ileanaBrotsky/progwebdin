@@ -7,22 +7,27 @@ class AbmArchivoCargadoEstado{
      * @return ArchivoCargadoEstado
      */
     private function cargarObjeto($param){
+        //print_r ($param);
         $obj = null;
            
         if( array_key_exists('idarchivocargadoestado',$param) and array_key_exists('idestadotipos',$param) and array_key_exists('acedescripcion',$param)
         and array_key_exists('idusuario',$param)and array_key_exists('acefechaingreso',$param)and array_key_exists('acefechafin',$param)
         and array_key_exists('idarchivocargado',$param)){
-            $obj = new ArchivoCargadoEstado();
+            
+           
             $objEstadoTipo = new EstadoTipos();
             $objEstadoTipo->setIdestadotipos($param['idestadotipos']); 
             $objEstadoTipo->cargar();
+            //print_r($objEstadoTipo);
             $objArchivo = new ArchivoCargado();
-            $objArchivo->setACId($param['idusuario']); 
+            $objArchivo->setACId($param['idarchivocargado']); 
             $objArchivo->cargar();
+           
             $objUsuario = new Usuario();
-            $objUsuario->setIdusuario($param['idarchivocargado']); 
+            $objUsuario->setIdusuario($param['idusuario']); 
             $objUsuario->cargar();
             //agregarle los otros objetos
+            $obj = new ArchivoCargadoEstado();
             $obj->setear($param['idarchivocargadoestado'], $objEstadoTipo, $param['acedescripcion'], $objUsuario, $param['acefechaingreso'],
              $param['acefechafin'], $objArchivo);
         }
@@ -66,6 +71,7 @@ class AbmArchivoCargadoEstado{
         $resp = false;
         $param['idarchivocargadoestado'] =null;
         $elObjtArchivoE = $this->cargarObjeto($param);
+        //print_r($elObjtArchivoE);
 //        verEstructura($elObjtTabla);
         if ($elObjtArchivoE!=null and $elObjtArchivoE->insertar()){
             $resp = true;

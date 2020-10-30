@@ -211,6 +211,7 @@ class ArchivoCargadoEstado {
         $base=new BaseDatos();
         $sql="INSERT INTO archivocargadoestado (idestadotipos, acedescripcion,idusuario, acefechaingreso, 
         acefechafin,idarchivocargado)  VALUES ('".$this->getObjestadotipo()->getIdestadotipos()."','".$this->getAcedescripcion()."','".$this->getObjusuario()->getIdusuario()."','".$this->getAcefechaingreso()."','".$this->getAcefechafin()."','".$this->getObjarchivocargado()->getACId()."')";
+        //echo $sql;
         if ($base->Iniciar()) {
             if ($elid = $base->Ejecutar($sql)) {
                 $this->setIdarchivocargadoestado($elid); 

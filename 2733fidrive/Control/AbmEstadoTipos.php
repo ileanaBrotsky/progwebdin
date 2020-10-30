@@ -117,49 +117,8 @@ class AbmEstadoTipos{
         return $arreglo;
         
     }
-    /*------------------------------------para buscar el estado de un objetoArchivo-------------------*/
-    /** devuelve el id del estado correspondiente a la descripcion de estado pasada por parámetro
-     * 
-     * @param array $param
-     */
-    public function buscarEstado($datos){
-        
-        //print_r($datos);   
-        $id=null;
-        //clave 0 = ALTA
-        if($datos['clave']==0){
-           $id=1;
-       }
-       //clave 1 = MODIFICACION (NO TIENE ESTADOTIPO)
-        //clave 2 = ELIMINACION
-       if($datos['clave']==2){
-        $id=4;
-       }
-        //clave 3 = COMPARTIR
-       if($datos['clave']==3){
-        $id=2;
-       }            
-        //clave 4 = DEJAR DE COMPARTIR ARCHIVO
-        if($datos['clave']==4){
-            $id=3;
-           } 
-       
-     $arrayEstados= $this->buscar(null);
-     //print_r($arrayEstados);
-       if($arrayEstados!=null){
-           $idEstadoTipoDelArchivo="";
-           $i=0;
-           do{
-            if($arrayEstados[$i]->getIdestadotipos()==$id){
-                $idEstadoTipoDelArchivo = $arrayEstados[$i]->getIdestadotipos();
-            }
-            $i++;
-           }
-           while($i< count($arrayEstados) && $arrayEstados[$i]->getIdestadotipos()!=$id);
-       }
-       //echo $idEstadoTipoDelArchivo;
-       return $idEstadoTipoDelArchivo;
-   }
+ 
+    
     
 }
 ?>

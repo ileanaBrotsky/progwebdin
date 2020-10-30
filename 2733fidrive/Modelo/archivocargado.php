@@ -179,7 +179,7 @@ class ArchivoCargado {
         $base=new BaseDatos();
         $sql="UPDATE archivocargado SET acnombre='".$this->getACNombre()."', acdescripcion='".$this->getACDescrip()."',acicono='".$this->getACIcono()."',idusuario='".$this->getObjUsuario()->getIdusuario()."',aclinkacceso='".$this->getACLink()."',accantidaddescarga='".$this->getACCantDesc()."',accantidadusada='".$this->getACCantUsada()."',acfechainiciocompartir='".$this->getACfechaInicCom()."',acefechafincompartir='".$this->getACfechaFinCom()."',acprotegidoclave='".$this->getACprotegido()."' WHERE idarchivocargado='". $this->getACId()."'";
         //si tengo dudas de por qué no funciona hago un echo de la setencia, la pego en la BD y veo que error tira
-       // echo $sql;
+       //echo $sql;
         if ($base->Iniciar()) {
             if ($base->Ejecutar($sql)) {
                 $resp = true;

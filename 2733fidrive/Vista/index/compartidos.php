@@ -55,7 +55,7 @@ include_once("../../Control/AbmArchivoCargadoEstado.php");
                         echo '<tr align="center" valign ="bottom" > <td>' . $objArchivo->getACId() . '</td>';
                         echo '<td>' . $objArchivo->getACNombre() . '</td>';
                         echo '<td>' . $objArchivo->getACIcono() . '</td>';
-                        echo '<td>' . $objArchivo->getIdUsuario() . '</td>';
+                        echo '<td>' . $objArchivo->getObjUsuario()->getIdUsuario() . '</td>';
                         echo '<td>' . $objArchivo->getACDescrip() . '</td>';
                         /* botón dejar de compartir archivo*/
                         echo '<td><button type="button" class="btn btn-primary m-3"><a href="dejardecompartir.php?idarchivocargado=' . $objArchivo->getACId() . '">No Compartir</button></td>';
