@@ -85,12 +85,13 @@ class AbmArchivoCargado{
      * @param array $datos
      * @return boolean
      */
-        public function altaArchivocargadoEstado($datos){//idarchivocargado
-         //   print_r($datos);
+        public function altaArchivocargadoEstado($datos){
+            print_r($datos);
         $resp=false;
         $fechahoy=date("Y-m-d h:i:s");
-        
-       $objetoEstadoTipos= new AbmEstadoTipos;
+        $descrip= "Archivo probando";
+        $idEstadoTipo=1;
+       /* $objetoEstadoTipos= new AbmEstadoTipos;
         $idEstadoTipo = $objetoEstadoTipos->buscarEstado($datos);
         if($idEstadoTipo == 1){
             $descrip= "Archivo Cargado";
@@ -104,7 +105,10 @@ class AbmArchivoCargado{
         if($idEstadoTipo == 4){
             $descrip= "Archivo eliminado";
         }*/
-                
+        /*f( array_key_exists('idarchivocargadoestado',$param) and array_key_exists('idestadotipos',$param) and array_key_exists('acedescripcion',$param)
+        and array_key_exists('idusuario',$param)and array_key_exists('acefechaingreso',$param)and array_key_exists('acefechafin',$param)
+        and array_key_exists('idarchivocargado',$param)){*/
+        
         $datosEstado= ['idarchivocargadoestado'=>"", 'idestadotipos'=>$idEstadoTipo, 'acedescripcion'=>$descrip,'idusuario'=>$datos['idusuario'], 'acefechaingreso'=>$fechahoy,'acefechafin'=>NULL,'idarchivocargado'=>$datos['idarchivocargado']];
         //print_r($datosEstado);
         $objEstado= new AbmArchivoCargadoEstado();
