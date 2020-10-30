@@ -1,2 +1,0 @@
-este es un texto de prueba, 
-generado para el ejercicio 2 del tp3 de porgramacion web dinámica
