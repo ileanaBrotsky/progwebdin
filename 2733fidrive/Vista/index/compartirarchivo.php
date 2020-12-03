@@ -26,7 +26,7 @@ if (isset($datos['idarchivocargado'])) {
 <div class="container border bg-white shadow rounded justify-content-center mt-3">
     <!--contenedor de titulo-->
     <div class="nav bg-light shadow mb-4 rounded">
-        <h4 class="text-primary"><i class="far fa-edit"></i> Trabajo Entregable/Parte 4</h3>
+        <h4 class="text-primary"><i class="far fa-edit"></i> Trabajo Entregable/Entrega 5- Compartir Archivo</h4>
     </div>
 
     <!--contenedor del Formulario-->
@@ -58,7 +58,7 @@ if (isset($datos['idarchivocargado'])) {
             <!-- Fila 2 % en 3 col de 4-->
             <div class="form-row col-12 ">
                 <div class="form-group col-4 p-1 ">
-                    <label class="control-label font-weight-bold" for="idusuario">Seleccione el tipo de Usuario:</label>
+                    <label class="control-label font-weight-bold" for="idusuario">Usuario:</label>
                     <select class='custom-select' id='idusuario' name='idusuario' required>"
                         <option value="">Elija Usuario</option>
                         <?php
@@ -66,8 +66,10 @@ if (isset($datos['idarchivocargado'])) {
                         $objSelect = $select->buscar(null);
 
                         foreach ($objSelect as $unObjeto) {
-                            echo  " <option value='" . $unObjeto->getIdusuario() . "'>" . $unObjeto->getUsapellido() . "</option>";
-                        }
+                            if($unObjeto->getUslogin()==$_SESSION["login"]){
+                            echo  " <option value='" . $unObjeto->getIdusuario() . "'selected='selected'>" .ucfirst($unObjeto->getUsnombre())." ". ucfirst($unObjeto->getUsapellido()) . "</option>";
+                        } 
+                    }
                         ?>
                     </select>
                     <!-- mensajes para validacion select -->
@@ -96,7 +98,7 @@ if (isset($datos['idarchivocargado'])) {
                                 <button class="password-strength__visibility btn btn-outline-secondary" type="button"><span class="password-strength__visibility-icon" data-visible="hidden"><i class="fas fa-eye-slash"></i></span><span class="password-strength__visibility-icon js-hidden" data-visible="visible"><i class="fas fa-eye"></i></span></button>
                             </div>
                         </div>
-                        <small class="password-strength__error text-danger js-hidden">This symbol is not allowed!</small>
+                        <small class="password-strength__error text-danger js-hidden">Este símbolo no está permitido</small>
                         <small class="form-text text-muted mt-2" id="passwordHelp">Minusculas/ mayusculas/ numeros/ simbolos</small>
                     </div>
                     

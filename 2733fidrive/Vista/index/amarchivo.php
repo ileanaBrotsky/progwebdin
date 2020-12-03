@@ -17,38 +17,49 @@ if (isset($datos['idarchivocargado'])) {
         $objArchivo = $listaArchivos[0];
            //print_r($objArchivo);
         $nombre = $objArchivo->getACNombre();
-        $icono = $objArchivo->getACIcono();
-        $usuario = $objArchivo->getObjUsuario()->getIdUsuario();
+        $icono = strtolower($objArchivo->getACIcono());
+        //$usuario = $objArchivo->getObjUsuario()->getIdUsuario();
         $descrip = $objArchivo->getACDescrip();
-        $clave = 1;
+        $clave = 1;//modificacion
         $idArchivo = $datos['idarchivocargado'];
-       
+     echo '<!--contenedor de todo-->
+     <div class="container border bg-white shadow rounded justify-content-center mt-3">
+         <!--contenedor de titulo-->
+         <div class="nav bg-light shadow mb-4 rounded">
+             <h4 class="text-primary"><i class="far fa-edit"></i> Trabajo Entregable/Entrega 5- Alta o modificación de archivo</h4>
+         </div>
+     
+         <!--contenedor del Formulario-->
+         <div class="nav shadow mb-5 rounded justify-content-center mt-2 p-3">
+             <!--Formulario-->
+             <form class="needs-validation col-12 " id="amformulario" name="amformulario" method="POST" action="../accion/actionArchivoCargado.php" enctype="multipart/form-data" novalidate>';
+                
     }
 } else {
-    $clave = 0;
+    $clave = 0;//alta
     $nombre = "";
     $icono = "";
     $usuario = "";
-    $descrip = "Esta es una desccripción genérica, si quiere puede cambiarla";
+    $descrip = "Esta es una descripción genérica, si quiere puede cambiarla";
     $idArchivo ="";
+    echo '<!--contenedor de todo-->
+    <div class="container border bg-white shadow rounded justify-content-center mt-3">
+        <!--contenedor de titulo-->
+        <div class="nav bg-light shadow mb-4 rounded">
+            <h4 class="text-primary"><i class="far fa-edit"></i> Trabajo Entregable/Entrega 5- Alta o modificación de archivo</h3>
+        </div>
+    
+        <!--contenedor del Formulario-->
+        <div class="nav shadow mb-5 rounded justify-content-center mt-2 p-3">
+            <!--Formulario-->
+            <form class="needs-validation col-12 " id="amformulario" name="amformulario" method="POST" action="../accion/actionArchivoCargado.php" enctype="multipart/form-data" novalidate>
+                <!--Fila 1 subir archivo-->
+                <div class="form-row" id="subirArchivo">
+                    <input type="file" class=" col-4" id="archivo" onchange="setearNombre()" name="archivo" accept="image/*,.zip,.pdf,.doc,.docx,.xls,.xlsx,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document">
+                </div>';
 }
 ?>
 
-<!--contenedor de todo-->
-<div class="container border bg-white shadow rounded justify-content-center mt-3">
-    <!--contenedor de titulo-->
-    <div class="nav bg-light shadow mb-4 rounded">
-        <h4 class="text-primary"><i class="far fa-edit"></i> Trabajo Entregable/Parte 4- Alta o modificación de archivo</h3>
-    </div>
-
-    <!--contenedor del Formulario-->
-    <div class="nav shadow mb-5 rounded justify-content-center mt-2 p-3">
-        <!--Formulario-->
-        <form class="needs-validation col-12 " id="amformulario" name="amformulario" method="POST" action="../accion/actionArchivoCargado.php" enctype="multipart/form-data" novalidate>
-            <!--Fila 1 subir archivo-->
-            <div class="form-row ">
-                <input type="file" class=" col-4" id="archivo" onchange="setearNombre()" name="archivo" accept="image/*,.zip,.pdf,.doc,.docx,.xls,.xlsx,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document">
-            </div>
             <!--Fila 2 % en 2 col-->
             <div class="form-row ">
                 <!-- columna 1 -Nombre-->
@@ -58,7 +69,7 @@ if (isset($datos['idarchivocargado'])) {
                 </div>
                 <!-- columna 2 tipo de usuario -->
                 <div class="form-group col-md-6">
-                    <label class="control-label font-weight-bold" for="idusuario">Seleccione el tipo de Usuario:</label>
+                    <label class="control-label font-weight-bold" for="idusuario">Usuario:</label>
                     <select class='custom-select' id='idusuario' name='idusuario' required>"
                         <option value="">Elija Usuario</option>
                         <?php
@@ -66,8 +77,10 @@ if (isset($datos['idarchivocargado'])) {
                         $objSelect = $select->buscar(null);
 
                         foreach ($objSelect as $unObjeto) {
-                            echo  " <option value='" . $unObjeto->getIdusuario() . "'>" . $unObjeto->getUsapellido() . "</option>";
+                            if($unObjeto->getUslogin()==$_SESSION["login"]){
+                            echo  " <option value='" . $unObjeto->getIdusuario() . "'selected='selected'>" .ucfirst($unObjeto->getUsnombre())." ". ucfirst($unObjeto->getUsapellido()) . "</option>";
                         } 
+                    }
                         ?>
                     </select>
                     <!-- mensajes para validacion select -->
@@ -83,27 +96,27 @@ if (isset($datos['idarchivocargado'])) {
                     <p class=font-weight-bold>Seleccione el tipo de archivo</p>
                     <!--grupo radio-button 1 imagen-->
                     <div class="custom-control custom-radio custom-control-inline">
-                    <input type="radio" id="imagen" name="acicono" value="Imagen" class="custom-control-input"<?php if($icono!=""&&$icono=="Imagen"):?>checked=' <? = echo "checked"?>  <?php endif; ?>'required>
+                    <input type="radio" id="imagen" name="acicono" value="Imagen" class="custom-control-input"<?php if($icono!=""&&$icono=="imagen"):?>checked=' <? = echo "checked"?>  <?php endif; ?>'required>
                         <label class="custom-control-label" for="imagen">Imagen</label>
                     </div>
                     <!--grupo radio-button 2 Zip-->
                     <div class="custom-control custom-radio custom-control-inline">
-                        <input type="radio" id="Zip" name="acicono" value="Zip" class="custom-control-input"<?php if($icono!=""&&$icono=="Zip"):?>checked=' <? = echo "checked"?>  <?php endif; ?>'required>
+                        <input type="radio" id="Zip" name="acicono" value="Zip" class="custom-control-input"<?php if($icono!=""&&$icono=="zip"):?>checked=' <? = echo "checked"?>  <?php endif; ?>'required>
                         <label class="custom-control-label" for="Zip">Zip</label>
                     </div>
                     <!--grupo radio-button 3 PDF-->
                     <div class="custom-control custom-radio custom-control-inline">
-                        <input type="radio" id="PDF" name="acicono" value="PDF" class="custom-control-input" <?php if($icono!=""&&$icono=="PDF"):?>checked=' <? = echo "checked"?>  <?php endif; ?>'required>
+                        <input type="radio" id="PDF" name="acicono" value="PDF" class="custom-control-input" <?php if($icono!=""&&$icono=="pdf"):?>checked=' <? = echo "checked"?>  <?php endif; ?>'required>
                         <label class="custom-control-label" for="PDF">PDF</label>
                     </div>
                     <!--grupo radio-button 4 DOC-->
                     <div class="custom-control custom-radio custom-control-inline">
-                        <input type="radio" id="DOC" name="acicono" value="DOC" class="custom-control-input" <?php if($icono!=""&&$icono=="DOC"):?> checked='<? = echo "checked"?>  <?php endif; ?>'required>
+                        <input type="radio" id="DOC" name="acicono" value="DOC" class="custom-control-input" <?php if($icono!=""&&$icono=="doc"):?> checked='<? = echo "checked"?>  <?php endif; ?>'required>
                         <label class="custom-control-label" for="DOC">DOC</label>
                     </div>
                     <!--grupo radio-button 5 XLS-->
                     <div class="custom-control custom-radio custom-control-inline">
-                        <input type="radio" id="XLS" name="acicono" value="XLS" class="custom-control-input" <?php if($icono!=""&&$icono=="XLS"):?>checked=' <? = echo "checked"?>  <?php endif; ?>'required>
+                        <input type="radio" id="XLS" name="acicono" value="XLS" class="custom-control-input" <?php if($icono!=""&&$icono=="xls"):?>checked=' <? = echo "checked"?>  <?php endif; ?>'required>
                         <label class="custom-control-label" for="XLS">XLS</label>
                     </div>
                     <!-- mensajes para validacion radio button -->

@@ -179,7 +179,10 @@ class ArchivoCargado {
         $base=new BaseDatos();
         $sql="UPDATE archivocargado SET acnombre='".$this->getACNombre()."', acdescripcion='".$this->getACDescrip()."',acicono='".$this->getACIcono()."',idusuario='".$this->getObjUsuario()->getIdusuario()."',aclinkacceso='".$this->getACLink()."',accantidaddescarga='".$this->getACCantDesc()."',accantidadusada='".$this->getACCantUsada()."',acfechainiciocompartir='".$this->getACfechaInicCom()."',acefechafincompartir='".$this->getACfechaFinCom()."',acprotegidoclave='".$this->getACprotegido()."' WHERE idarchivocargado='". $this->getACId()."'";
         //si tengo dudas de por qué no funciona hago un echo de la setencia, la pego en la BD y veo que error tira
-       //echo $sql;
+      /* En php 7 en adelante si phpmyadmin no cambia ninguna fila porque no hay nada para modificar va a dar falsa la
+        la consulta en base de datos asi que hay que poner if ($base->Ejecutar($sql >=0))
+        en este caso no me pasa porque siempre que envio modifica*/
+      //echo $sql;
         if ($base->Iniciar()) {
             if ($base->Ejecutar($sql)) {
                 $resp = true;

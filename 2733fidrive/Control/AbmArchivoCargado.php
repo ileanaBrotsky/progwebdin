@@ -1,5 +1,5 @@
 <?php
-class AbmArchivoCargado{
+    class AbmArchivoCargado{
     /**
      * Espera como parametro un arreglo asociativo donde las claves coinciden 
      * con los nombres de las variables instancias del objeto
@@ -14,6 +14,7 @@ class AbmArchivoCargado{
         and array_key_exists('accantidaddescarga',$param)and array_key_exists('accantidadusada',$param)and array_key_exists('acfechainiciocompartir',$param)
         and array_key_exists('acefechafincompartir',$param)and array_key_exists('acprotegidoclave',$param)){
             $obj = new ArchivoCargado();
+            //creo obj usuario
             $objUsuario = new Usuario();
             $objUsuario->setIdusuario($param['idusuario']); 
             $objUsuario->cargar();
@@ -23,7 +24,7 @@ class AbmArchivoCargado{
         }
         return $obj;
     }
-    
+   /*-------------------------------------CARGAR SOLO CON LA CLAVE---------------------------------------*/
     /**
      * Espera como parametro un arreglo asociativo donde las claves 
      * coinciden con los nombres de las variables instancias del objeto que son claves
@@ -40,7 +41,7 @@ class AbmArchivoCargado{
         return $obj;
     }
   
-    /*------------------------------------------------------------------------------------------*/
+     /*--------------------------------------CHEQUEO CLAVES SETEADAS----------------------------------------------*/
     /**
      * Corrobora que dentro del arreglo asociativo estan seteados los campos claves
      * @param array $param
@@ -56,14 +57,15 @@ class AbmArchivoCargado{
  
     
 
-
+    /****************************************************************************************************************** */
     /*------------------------------------FUNCIONES PARA DAR DE  ALTA UN ARCHIVO----------------------------------------*/
-    /** sube el archivo a ambas tablas: archivocargado y archivocargadoestado
-     * 
+    /** 
+     * Sube el archivo a ambas tablas: archivocargado y archivocargadoestado
      * @param array $param
      * @return boolean
      */
     public function alta($param){
+   
        // print_r($param);
         $resp = false;
         $param['idarchivocargado'] =null;
@@ -79,17 +81,20 @@ class AbmArchivoCargado{
         }
         return $resp;
      }
-    /*---------------------------------------------------------------*/ 
-    //carga en tabla archivoscargadosestado un objeto a partir de un array de datos pasado por parámetro- $datos==los datos que llegan de amarchivo
-   /**
-     * permite eliminar un objeto 
+    /*----------------------------------------altaArchivocargadoEstado-------------------------------------------------------------*/ 
+    /**
+     * Carga en tabla archivoscargadosestado un objeto a partir de un array 
+     * de datos pasado por parámetro- $datos==los datos que llegan de amarchivo
+     * 
      * @param array $datos
      * @return boolean
      */
-        public function altaArchivocargadoEstado($datos){
+    public function altaArchivocargadoEstado($datos){
         //print_r($datos);
-        /*Array ( [acnombre] => horario 2020.xlsx [diascompartido] => null [accantidaddescarga] => null [idusuario] => 2 [acprotegidoclave] => null [aclinkacceso] => -1001055095 [idarchivocargado] => 94 [clave] => 3 [descripcion] =>
-        Esta es una desccripción genérica, si quiere puede cambiarla
+        /*Array ( [acnombre] => horario 2020.xlsx [diascompartido] => null 
+        [accantidaddescarga] => null [idusuario] => 2 [acprotegidoclave] => null 
+        [aclinkacceso] => -1001055095 [idarchivocargado] => 94 
+        [clave] => 3 [descripcion] => Esta es una descripción genérica, si quiere puede cambiarla
         [acicono] => XLS*/
         $resp=false;
         $fechahoy=date("Y-m-d h:i:s");
@@ -110,10 +115,9 @@ class AbmArchivoCargado{
             $idEstadoTipo=3;
             $descrip= "Archivo No compartido";
         }
-       
-        
-        
-        $datosEstado= ['idarchivocargadoestado'=>"", 'idestadotipos'=>$idEstadoTipo, 'acedescripcion'=>$descrip,'idusuario'=>$datos['idusuario'], 'acefechaingreso'=>$fechahoy,'acefechafin'=>NULL,'idarchivocargado'=>$datos['idarchivocargado']];
+         $datosEstado= ['idarchivocargadoestado'=>"", 'idestadotipos'=>$idEstadoTipo, 'acedescripcion'=>$descrip,
+        'idusuario'=>$datos['idusuario'], 'acefechaingreso'=>$fechahoy,'acefechafin'=>NULL,
+        'idarchivocargado'=>$datos['idarchivocargado']];
         //print_r($datosEstado);
         $objEstado= new AbmArchivoCargadoEstado();
         if($objEstado->alta($datosEstado)){
@@ -122,10 +126,10 @@ class AbmArchivoCargado{
        return $resp;              
        }
       
-     //----------------------------------------------------------------------------------------------  
-     //para subir archivo- SE USA EN AMARCHIVO.PHP
+     //-------------------------------------------------subirArchivo--------------------------------------------------------------  
+     
     /**
-     * permite eliminar un objeto 
+     * Para subir archivo- SE USA EN AMARCHIVO.PHP
      * @param array $datos
      * @return boolean
      */
@@ -137,10 +141,7 @@ class AbmArchivoCargado{
     if ($_FILES['archivo']["error"] <= 0) {
         $nombreArchivo= $_FILES['archivo']['name']  ;
         $tipoArchivo= $_FILES['archivo']['type'] ;
-        $tamañoArchivo= ($_FILES['archivo']["size"] / 1024);
-        $carpetaTemporalArchivo= $_FILES['archivo']['tmp_name'];
-        $linkDescarga="No hay link disponible";
-        
+    
     //Verificaciones pedidas en el ejercicio deducidas por el tipo de archivo posible de seleccionar 
               if($tipoArchivo=="application/pdf" ||$tipoArchivo== "application/msword"||$tipoArchivo== "image/jpeg" ||$tipoArchivo== "application/vnd.openxmlformats-officedocument.wordprocessingml.document"||
               $tipoArchivo== " application/x-zip-compressed"||$tipoArchivo== "application/x-zip-compressed"||$tipoArchivo== "application/vnd.ms-excel"||$tipoArchivo== " application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"){
@@ -150,7 +151,7 @@ class AbmArchivoCargado{
             $resp=true; }
         else{
             $mensaje= "El archivo ".$nombreArchivo." se ha copiado con éxito <br />";
-            $linkDescarga=$dir.$_FILES["archivo"]["name"];
+            
         }
     }
     else{
@@ -166,12 +167,13 @@ class AbmArchivoCargado{
   return $resp;
   
   } 
-  /*---------------------------********* ALTA ARCHIVO NUEVO *********------------------------------------*/
-    /*Debe subir el archivo seleccionado a la carpeta de archivos, 
-   agregar el alta en la base de datos de "archivocargado" y 
-    agregar el alta en la base de datos de "archivocargadoestado"*/
+  /*-------------------------------********* ALTA ARCHIVO NUEVO *********---------------------------------------*/
     /**
-     * permite eliminar un objeto 
+     * Combina todas:
+     * Debe subir el archivo seleccionado a la carpeta de archivos, 
+     * agregar el alta en la base de datos de "archivocargado" y 
+     * agregar el alta en la base de datos de "archivocargadoestado"
+     * 
      * @param array $datos
      * @return boolean
      */
@@ -210,7 +212,6 @@ class AbmArchivoCargado{
         return $resp;
     }
    
-  
     
    /*--------------------------------------- BUSCAR CON O SIN PARAMETRO UN OBJ--------------------------------------*/ 
    /**
@@ -249,8 +250,17 @@ class AbmArchivoCargado{
         }
  /**************************************************************************************************************/ 
  /*----------------------------------COMPARTIR ARCHIVO---------------------------------------------------------*/
+    /**
+     * Calcula la cantidad de dias que se compartirá par setear fecha fin compartir
+     * arma un array con los datos nuevos, carga un obj y lo modifica en la base de datos
+     * setea fecha final en el archivocargadoestado que venía teniendo
+     * crea un nuevo obj archivocargadoestado con los datos actuales y lo sube a la base de datos
+     * 
+     * @param array $datos
+     * @return boolean
+     */
     public function compartirArchivo($datos){
-        //echo "estoy en compartirarchivo";
+        
         //print_r($datos);
         $resp= false;
         $fechahoy=date("Y-m-d h:i:s");
@@ -282,7 +292,7 @@ class AbmArchivoCargado{
  return $resp;
  }
  /**************************************************************************************************************/ 
- /*----------------------------------ELIMINAR ARCHIVO---------------------------------------------------------*/
+ /*----------------------------------ELIMINAR -BORRADO LÓGICO---------------------------------------------------------*/
   /**
      * permite buscar un objeto Y CAMBIAR SU ESTADO A BAJA
      * @param array $param
@@ -305,23 +315,22 @@ class AbmArchivoCargado{
                $objArchivo->getObjUsuario()->setIdUsuario($usuario);
                if( $objArchivo->modificar()){
                 $resp=true;
-            }
+            
             //setear fecha fin en archivocargadoestado anterior
             $archivocargadoEstado= new AbmArchivoCargadoEstado;
             $resp= $archivocargadoEstado->setearfechafin($param);
             //hacer nueva tupla de archivocargadoestado con datos nuevos
             $resp= $this->altaArchivocargadoEstado($param);
-               
+        }
                
             }
-
+        }
         return $resp;
-
-  }
+  
 }
 /*----------------------------------DEJAR DE COMPARTIR ARCHIVO---------------------------------------------------------*/
   /**
-     * permite buscar un objeto Y CAMBIAR SU ESTADO NO COMPARTIDO
+     * Permite buscar un objeto Y CAMBIAR SU ESTADO NO COMPARTIDO
      * @param array $param
      * @return boolean
      */
@@ -342,44 +351,129 @@ class AbmArchivoCargado{
   
   /*-------------------------------------CONTROLA CADUCIDAD DE COMPARTIR-----------------*/
    /**
-     * permite SACAR DE COMPARTIDOS a los objetos que pasaron la fecha de compartir.
+     * Permite SACAR DE COMPARTIDOS a los objetos que pasaron la fecha de compartir.
+     * Se acciona cuando se carga la lista de compartidos
      * @param array 
      * @return boolean
      */
     public function chequearCaducidadCompartir(){
-        //traigo todos los objetos- estado compartido
         $objAbmArchivoCargadoEstado= new AbmArchivoCargadoEstado;
-        $ide=[2, ""];
-        $arrayobjEstadoCompartido = $objAbmArchivoCargadoEstado->filtrar($ide);
-       //busco todos los archivos cargados
-        $arrayArchivos= $this ->buscar(null);
-      // seleccionar los archivos que estan compartidos
+       //traigo todos los objetoscargadoEstado que tegan estado 2(- estado compartido)
+        $datos=['idestadotipos'=> 2];
+        $arrayobjEstadoCompartido = $objAbmArchivoCargadoEstado->buscar($datos);
+        if(count($arrayobjEstadoCompartido)>0){
+      
+        //busco todos los archivos cargados
+        $arrayArchivoscargados= $this ->buscar(null);
+        if(count($arrayArchivoscargados)>0){
+      // seleccionar los archivos que tienen estadoarchivocargado compartido
       $archivosCompartidos=[];
-      foreach ($arrayobjEstadoCompartido as $objEstado) {
-            
-        $i = 0;
-         while ($i < count($arrayobjEstadoCompartido)) {
-           if ($objEstado->getIdarchivocargado() == $arrayArchivos[$i]-> getACId()){
-               array_push( $archivosCompartidos,$arrayArchivos[$i]);
-           }
-           $i++;
-       }
-   }
-if($archivosCompartidos!=""){
-        $fechahoy=strtotime(date("Y-m-d h:i:s",time()));
-
+      foreach ($arrayobjEstadoCompartido as $objEstadoCompartido) {
+         $i = 0;
+         while ($i < count($arrayArchivoscargados)) {
+           if ($objEstadoCompartido->getObjarchivocargado()->getACId() == $arrayArchivoscargados[$i]-> getACId()){
+               array_push( $archivosCompartidos,$arrayArchivoscargados[$i]);
+                }
+                $i++;
+            }
+        }
+        //print_r($archivosCompartidos);
+        if($archivosCompartidos!=""){
         foreach ($archivosCompartidos as $archivo){
             $fechaFinCompartir=($archivo->getACfechaFinCom());
-            if($fechaFinCompartir < $fechahoy){
-                echo "ENTREEEEEE";
-          $arraydatos= ['idarchivocargado'=>$archivo->getACId(),'idusuario'=>$archivo->getIdUsuario(),'clave'=>4];
-          if($arraydatos!="")  { $this-> dejardeCompartir($arraydatos);
-          }
-           
+            if ($fechaFinCompartir!="0000-00-00 00:00:00"){
+                $fecha_hoy=strtotime(date("Y-m-d h:i:s",time()));
+                $fecha_fin = strtotime($fechaFinCompartir);
+                    
+                if( $fecha_fin < $fecha_hoy ){
+                    echo "venció";
+                $arraydatos= ['idarchivocargado'=>$archivo->getACId(),'idusuario'=>$archivo->getObjUsuario()->getIdusuario(),'clave'=>4];
+                 $this-> dejardeCompartir($arraydatos);
+                }
+            }
         }
-    
-    }
     }
 }
+      }
+    }
+
+
+ /*-------------------------------------PASAR A USUARIO LINK DE DESCARGA DE ARCHIVO-----------------*/
+   /**
+    * 
+     * Controla que el hash exista en base de datos.
+     * controla que al archivo esté compartido( idestadotipo ==2)
+     * controla que la cantidad de descargas que quedn sea > 0( if( accantidaddescarga !=0){if (accantidadusada < accantidaddescarga){$resp=true}})
+     * controla que la fecha fin de descarga sea menor o igual a hoy)
+     * Se acciona cuando se carga la lista de compartidos
+     * @param array 
+     * @return string
+     */
+    public function pasarlink($datos){
+        $this->chequearCaducidadCompartir();
+         $resp=false;
+        $link="No hay archivo para descargar";
+        $hash= $datos['codigodescarga'];
+        //Controla que el hash exista en base de datos.
+        if($hash!=""&& $hash!=0 && $hash!=null){
+            $dato=['aclinkacceso'=>$hash];
+            //busco el archivo compartido con ese hash- me trae array de un solo dato que es el archivo
+            $archivosCompartidos=[];
+            $archivosCompartidos= $this->buscar($dato);
+            if(count($archivosCompartidos)<=0){
+                $link=$link." El código no es válido.";
+            }
+            else{
+            $archivoCompartido=$archivosCompartidos[0];
+
+            //verifico que el estado actual del archivo sea compartido
+           $archivoCargadoEstado= new AbmArchivoCargadoEstado;
+           $datoIdArchivo=['idarchivocargado' =>$archivoCompartido-> getACId()];
+           //traigo todos los estados que tiene ese archivo por su idarchivocargado
+            $estadosArchivo=  $archivoCargadoEstado->buscar($datoIdArchivo);
+           // print_r($estadosArchivo);
+            //busco si $archivoCompartido tiene estado compartido y está activo
+            if($archivoCargadoEstado->ActivoYCompartido($estadosArchivo)){
+           
+             //chequeo si cant de descargas es igual a cero no tiene limite
+             if($archivoCompartido->getACCantDesc()==0){
+                $cantUsada= $archivoCompartido->getACCantUsada()+1;
+                $archivoCompartido->setACCantUsada($cantUsada);
+                $archivoCompartido->modificar();
+                $resp= true;
+            }
+             //chequeo que si la cantidad de descargas está seteada sea mayor a cantidad usada
+            elseif($archivoCompartido->getACCantDesc()>0){
+                //chequeo que queden descargas disponibles
+                 if($archivoCompartido->getACCantDesc() > $archivoCompartido->getACCantUsada()){
+                    $resp= true;
+                    $cantUsada= $archivoCompartido->getACCantUsada()+1;
+                    $archivoCompartido->setACCantUsada($cantUsada);
+                    $archivoCompartido->modificar();
+                    }
+                    else{    
+                        $resp= false;
+                        $link=$link. " Se completó la cantidad de descargas posibles";
+                        //saco de compartidos el archivo proque no tiene mas descargas posibles  
+                        $arraydatos= ['idarchivocargado'=>$archivoCompartido->getACId(),'idusuario'=>$archivoCompartido->getObjUsuario()->getIdUsuario(),'clave'=>4];
+                            if($arraydatos!="")  { 
+                                $this-> dejardeCompartir($arraydatos);
+                            }
+                        }
+                 
+            }
+            }
+            
+                   }
+                }
+            
+                    
+        if($resp==true){
+            $nombreArchivo= $archivoCompartido->getACNombre();
+                  
+            $link="http://localhost/progwebdin/2733fidrive/archivos/". $nombreArchivo."";
+        }
+       
+     return $link;
+    }
 }
-  ?>

@@ -93,7 +93,13 @@ function sugerirRadio() {
     }
 }
 
-		
+	//para cargar el modal de eliminar
+function cargarModalE(){
+  var nombre = document.getElementById("SelectorArchivos").value;
+  var elementoModal = document.getElementById("nombreArchivoModalE");
+      elementoModal.value= nombre;
+
+}	
 
 //para poner el nombre automaticamente en el input nombre de archivo cuando se sube un archivo-SE USA EN AMARCHIVO
   function setearNombre(){
@@ -176,7 +182,7 @@ else{
           scrollbarY.style.cssText = `top: ${this.scrollTop}px!important; height: 400px; right: ${-this.scrollLeft}px`;
         }
 
-  //para mostrar u ocultar contraseña
+  //para ver u ocultar contraseña con el ojito del costado
   $(document).ready(function() {
     $("#show_hide_password a").on('click', function(event) {
         event.preventDefault();

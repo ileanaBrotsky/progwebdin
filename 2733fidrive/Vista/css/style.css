@@ -70,10 +70,12 @@ body a {
       -webkit-appearance: none;
     }
   footer{
+    
       background: linear-gradient(118deg, rgba(255,255,255,0.4430147058823529) 19%, rgba(215,214,212,0.8071603641456583) 100%);
   }
   #presentacion{
-      background-color: rgba(245, 241, 241, 0.9);
+    background-image: url("../imagenes/movimiento.gif");
+    background-size: cover;
   }
   .invisible{
       background-color: rgba(245, 241, 241, 0.9);
@@ -87,7 +89,7 @@ body a {
       font-size: 4em;
       font-family: 'Roboto', sans-serif;
       font-weight: bolder;
-      color: rgb(120, 194, 173);
+      
       animation-duration: 8s;
      
   }
@@ -121,7 +123,7 @@ body a {
   .my-custom-scrollbar {
     position: relative;
     
-    height: 500px;
+    height: 400px;
     overflow: auto;
   }
   

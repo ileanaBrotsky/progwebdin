@@ -144,7 +144,7 @@ class Usuario {
         $this->setUsactivo($usactivo);
        
         }
-/*----------------------CARGAR -----------------------------*/
+/*----------------------CARGAR (trae de la base de datos la info y la carga en el obj)-----------------------------*/
     public function cargar(){
         $resp = false;
         $base=new BaseDatos();
@@ -163,7 +163,7 @@ class Usuario {
         return $resp;  
     }
 
-/*------------------------INSERTAR----------------------------------------*/
+/*------------------------INSERTAR (guarda la info en la base de datos)----------------------------------------*/
     public function insertar(){
         $resp = false;
         $base=new BaseDatos(); 
@@ -218,7 +218,7 @@ class Usuario {
     }
 /*------------------------------LISTAR--------------------------------------------*/     
     public static function listar($parametro=""){
-        $arreglo = array();
+        $objetos = array();
         $base=new BaseDatos();
         $consultasql="SELECT * FROM usuario ";
         if ($parametro!="") {
@@ -232,7 +232,7 @@ class Usuario {
                     $obj= new Usuario();
                     
                     $obj->setear($row['idusuario'],$row['usnombre'],$row['usapellido'],$row['uslogin'],$row['usclave'],$row['usactivo']);
-                    array_push($arreglo, $obj);
+                    array_push($objetos, $obj);
                    
                 }
                
@@ -242,7 +242,7 @@ class Usuario {
             $this->setmensajeoperacion("Usuario->listar: ".$base->getError());
         }
  
-        return $arreglo;
+        return $objetos;
     }
     
 }

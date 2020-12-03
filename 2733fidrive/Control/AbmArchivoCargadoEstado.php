@@ -3,6 +3,7 @@ class AbmArchivoCargadoEstado{
     /**
      * Espera como parametro un arreglo asociativo donde las claves coinciden 
      * con los nombres de las variables instancias del objeto
+     * Devuelve un objeto
      * @param array $param
      * @return ArchivoCargadoEstado
      */
@@ -14,18 +15,21 @@ class AbmArchivoCargadoEstado{
         and array_key_exists('idusuario',$param)and array_key_exists('acefechaingreso',$param)and array_key_exists('acefechafin',$param)
         and array_key_exists('idarchivocargado',$param)){
             
-           
+           //creo objeto estadotipos
             $objEstadoTipo = new EstadoTipos();
             $objEstadoTipo->setIdestadotipos($param['idestadotipos']); 
             $objEstadoTipo->cargar();
-            //print_r($objEstadoTipo);
-            $objArchivo = new ArchivoCargado();
-            $objArchivo->setACId($param['idarchivocargado']); 
-            $objArchivo->cargar();
-           
+          
+           //creo objeto usuario
             $objUsuario = new Usuario();
             $objUsuario->setIdusuario($param['idusuario']); 
             $objUsuario->cargar();
+            
+            //creo objeto archivocargado
+            $objArchivo = new ArchivoCargado();
+            $objArchivo->setACId($param['idarchivocargado']); 
+            $objArchivo->cargar();
+            
             //agregarle los otros objetos
             $obj = new ArchivoCargadoEstado();
             $obj->setear($param['idarchivocargadoestado'], $objEstadoTipo, $param['acedescripcion'], $objUsuario, $param['acefechaingreso'],
@@ -33,7 +37,7 @@ class AbmArchivoCargadoEstado{
         }
         return $obj;
     }
-    /*----------------------------------------------------------------------------*/
+    /*-------------------------------------CARGAR SOLO CON LA CLAVE---------------------------------------*/
     /**
      * Espera como parametro un arreglo asociativo donde las claves 
      * coinciden con los nombres de las variables instancias del objeto que son claves
@@ -49,43 +53,46 @@ class AbmArchivoCargadoEstado{
         }
         return $obj;
     }
-    /*----------------------------------------------------------------------------*/
+
+    /*--------------------------------------CHEQUEO CLAVES SETEADAS----------------------------------------------*/
     /**
      * Corrobora que dentro del arreglo asociativo estan seteados los campos claves
      * @param array $param
      * @return boolean
      */
-    
     private function seteadosCamposClaves($param){
         $resp = false;
         if (isset($param['idarchivocargadoestado']))
             $resp = true;
         return $resp;
     }
-    /*----------------------------------------------------------------------------*/
+    
+    /*------------------------------------INSERTAR EN BASE DE DATOS-----------------------------------------------*/
     /**
-     * 
+     * Carga un objeto con los datos pasados por parámetro y lo 
+     * Inserta en la base de datos
      * @param array $param
+     * @return boolean
      */
     public function alta($param){
         $resp = false;
         $param['idarchivocargadoestado'] =null;
         $elObjtArchivoE = $this->cargarObjeto($param);
         //print_r($elObjtArchivoE);
-//        verEstructura($elObjtTabla);
         if ($elObjtArchivoE!=null and $elObjtArchivoE->insertar()){
             $resp = true;
         }
         return $resp;
-        
     }
-    /*----------------------------------------------------------------------------*/
+
+    /*-----------------------------------------ELIMINA OBJETO DE BASE DE DATOS--------------------------------------------*/
     /**
+     * Por lo general no se usa ya que se utiliza borrado lógico ( es decir pasar de activo a inactivo)
      * permite eliminar un objeto 
      * @param array $param
      * @return boolean
-     */
-    public function baja($param){
+    */
+   /* public function baja($param){
         $resp = false;
         if ($this->seteadosCamposClaves($param)){
             $elObjtArchivoE = $this->cargarObjetoConClave($param);
@@ -95,10 +102,11 @@ class AbmArchivoCargadoEstado{
         }
         
         return $resp;
-    }
-    /*----------------------------------------------------------------------------*/
+    } */
+
+    /*----------------------------------------MODIFICA EN BASE DE DATOS ------------------------------------------*/
     /**
-     * permite modificar un objeto
+     * Carga un obj con los datos pasados por parámetro y lo modifica en base de datos (update)
      * @param array $param
      * @return boolean
      */
@@ -113,11 +121,13 @@ class AbmArchivoCargadoEstado{
         }
         return $resp;
     }
-    /*----------------------------------------------------------------------------*/
+
+    /*-----------------------------------BUSCAR OBJ EN BASE DE DATOS--------------------------------------------------*/
     /**
+     * Puede traer un obj específico o toda la lista si el parámetro es null
      * permite buscar un objeto
      * @param array $param
-     * @return boolean
+     * @return array
      */
     public function buscar($param){
         $where = " true ";
@@ -143,24 +153,30 @@ class AbmArchivoCargadoEstado{
         
     }
 
-     /*------------------------------------FILTRAR LISTA DE ARCHIVOS POR PARAMETRO y ARMAR ARRAY PARA MOSTRAR----------------------------------------*/
+     /*------------------------------------FILTRAR LISTA DE ARCHIVOS POR PARAMETRO-------------------------------------------------*/
+     /**
+     * busca todos los objetos y selecciona los que cumplen la condición
+     * pasada por parametro
+     * @param array $param que tiene el estado buscado  y el usuario de la session
+     * @return array de objcargadoestados 
+     */
      public function filtrar($param){
-     // print_r($param);
+         $archivoscargados= new AbmArchivoCargado;
+         $archivoscargados->chequearCaducidadCompartir();
+      //print_r($param);
         $listaArchivosE = $this->buscar(null);
        // print_r($listaArchivosE);
         $objetosCargados=[];
         //filtro los archivocargadoEstados que corresponden al parametro y no tienen fecha final
         foreach ($listaArchivosE as $archivoE){
-            if($archivoE->getObjestadotipo()->getIdestadotipos()==$param[0] && $archivoE->getAcefechafin()== "0000-00-00 00:00:00"){
+            if((($archivoE->getObjestadotipo()->getIdestadotipos()==$param[0]) || 
+            ($archivoE->getObjestadotipo()->getIdestadotipos()==$param[1]))&& 
+            ($archivoE->getObjusuario()->getIdusuario()==$param[2])&&
+            ($archivoE->getAcefechafin()== "0000-00-00 00:00:00")){
                 array_push($objetosCargados,$archivoE);
-                
-            }
-            if($archivoE->getObjestadotipo()->getIdestadotipos()==$param[1] && $archivoE->getAcefechafin()== "0000-00-00 00:00:00"){
-                array_push($objetosCargados,$archivoE);
-                
-            }
+           }
         }
-       // print_r($objetosCargados);
+        // print_r($objetosCargados);
         $objMostrar=[];
          /*Si hay archivos en esa condición */
          if (count($objetosCargados) > 0) {
@@ -168,10 +184,9 @@ class AbmArchivoCargadoEstado{
             $objAbmArchivoCargado = new AbmArchivoCargado();
             $listaArchivos = $objAbmArchivoCargado->buscar(null);
 
-            //comparo los ides de ambas tablas apra seleccionar solo aquelos archivos que cumplan la condicion del estado
+            //comparo los ides de ambas tablas para seleccionar solo aquellos archivos que cumplan la condicion del estado
             foreach ($listaArchivos as $objArchivo) {
-            
-             $i = 0;
+            $i = 0;
               while ($i < count($objetosCargados)) {
                 if ($objArchivo->getACId() == $objetosCargados[$i]->getObjarchivocargado()->getACId()){
                     array_push( $objMostrar,$objArchivo);
@@ -183,9 +198,8 @@ class AbmArchivoCargadoEstado{
       // print_r($objMostrar);
        return $objMostrar;
     }
-
     
-     /*----------------------------------------------------------------------------*/
+     /*--------------------------------------------CAMBIA FECHA FINAL-------------------------------------------*/
      /**
      * permite setear fechafin 
      * @param array $param
@@ -210,11 +224,25 @@ class AbmArchivoCargadoEstado{
             }
             $i++;
         }while ($i< count($archivos));
-       
-       
-        
-    }
+      }
         return $resp;
     }
+    /*-------------------------------------CONTROLA QUE EL ESTADO DE  UN ARCHIVO ESTÉ ACTIVO Y SEA COMPARTIDO-----------------*/
+   /**
+    * 
+     * Recibe como parametro un array de objetos archivoscargadoestado que tienen el mismo idarchivocargado.*/
+    public function ActivoYCompartido($estadosArchivo){
+        $i=0;
+        $resp=false;
+        while($i<count($estadosArchivo)&&$resp==false){
+            if(($estadosArchivo[$i]->getObjestadotipo()->getIdestadotipos()==2)&&($estadosArchivo[$i]->getAcefechafin()=="0000-00-00 00:00:00")){
+                $resp= true;
+        }
+        $i++;
+    }
+    return $resp;
+    }
+
+
 }
 ?>

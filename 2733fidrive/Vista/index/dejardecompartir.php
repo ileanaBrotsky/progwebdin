@@ -17,6 +17,7 @@ if (isset($datos['idarchivocargado'])) {
         $nombre = $objArchivo->getACNombre();
         $clave = 4;
         $id = $datos['idarchivocargado'];
+        $cantidadCompartida=$objArchivo->getACCantUsada();
      }
 }
 
@@ -25,7 +26,7 @@ if (isset($datos['idarchivocargado'])) {
 <div class="container border bg-white shadow rounded justify-content-center mt-3">
     <!--contenedor de titulo-->
     <div class="nav bg-light shadow mb-3 rounded">
-        <h4 class="text-primary"><i class="far fa-edit"></i> Trabajo Entregable/Parte 4</h3>
+        <h4 class="text-primary"><i class="far fa-edit"></i> Trabajo Entregable/Entrega 5- Dejar de compartir archivo</h4>
     </div>
      <!--contenedor del Formulario-->
     <div class="container shadow mb-5 rounded  mt-2 p-3">
@@ -43,13 +44,13 @@ if (isset($datos['idarchivocargado'])) {
                 </div>
                 <!-- columna 2 -cantidad de veces que se ha compartido-->
                 <div class="form-group  col-md-3 ">
-                <label class="control-label font-weight-bold" for="cantcompartida">El archivo se ha compartido:</label>
-                    <input type="text" readonly class="form-control font-weight-bold bg-light shadow-lg rounded pl-2" id="cantcompartida" name="cantcompartida" value="10 veces">
+                <label class="control-label font-weight-bold" for="cantcompartida">Cantidad de veces compartido:</label>
+                    <input type="text" readonly class="form-control font-weight-bold bg-light shadow-lg rounded pl-2" id="cantcompartida" name="cantcompartida" value="<?php echo $cantidadCompartida ?>">
                                      
                 </div>
                 <!-- columna 3 tipo de usuario -->
                 <div class="form-group col-md-6">
-                    <label class="control-label font-weight-bold" for="idusuario">Seleccione el tipo de Usuario:</label>
+                    <label class="control-label font-weight-bold" for="idusuario">Usuario:</label>
                     <select class='custom-select' id='idusuario' name='idusuario' required>"
                         <option value="">Elija Usuario</option>
                         <?php
@@ -57,8 +58,10 @@ if (isset($datos['idarchivocargado'])) {
                         $objSelect = $select->buscar(null);
 
                         foreach ($objSelect as $unObjeto) {
-                            echo  " <option value='" . $unObjeto->getIdusuario() . "'>" . $unObjeto->getUsapellido() . "</option>";
+                            if($unObjeto->getUslogin()==$_SESSION["login"]){
+                            echo  " <option value='" . $unObjeto->getIdusuario() . "'selected='selected'>" .ucfirst($unObjeto->getUsnombre())." ". ucfirst($unObjeto->getUsapellido()) . "</option>";
                         } 
+                    }
                         ?>
                     </select>
                     <!-- mensajes para validacion select -->

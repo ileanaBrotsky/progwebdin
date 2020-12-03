@@ -25,7 +25,7 @@ if (isset($datos['idarchivocargado'])) {
 <div class="container border bg-white shadow rounded justify-content-center mt-3">
     <!--contenedor de titulo-->
     <div class="nav bg-light shadow mb-3 rounded">
-        <h4 class="text-primary"><i class="far fa-edit"></i> Trabajo Entregable/Parte 4</h3>
+        <h3 class="text-primary"><i class="far fa-edit"></i> Trabajo Entregable/Entrega 5- Eliminar archivo</h4>
     </div>
      <!--contenedor del Formulario-->
     <div class="container shadow mb-5 rounded  mt-2 p-3">
@@ -43,7 +43,7 @@ if (isset($datos['idarchivocargado'])) {
                 </div>
                 <!-- columna 2 tipo de usuario -->
                 <div class="form-group col-md-6">
-                    <label class="control-label font-weight-bold" for="idusuario">Seleccione el tipo de Usuario:</label>
+                    <label class="control-label font-weight-bold" for="idusuario">Usuario:</label>
                     <select class='custom-select' id='idusuario' name='idusuario' required>"
                         <option value="">Elija Usuario</option>
                         <?php
@@ -51,8 +51,10 @@ if (isset($datos['idarchivocargado'])) {
                         $objSelect = $select->buscar(null);
 
                         foreach ($objSelect as $unObjeto) {
-                            echo  " <option value='" . $unObjeto->getIdusuario() . "'>" . $unObjeto->getUsapellido() . "</option>";
+                            if($unObjeto->getUslogin()==$_SESSION["login"]){
+                            echo  " <option value='" . $unObjeto->getIdusuario() . "'selected='selected'>" .ucfirst($unObjeto->getUsnombre())." ". ucfirst($unObjeto->getUsapellido()) . "</option>";
                         } 
+                    } 
                         ?>
                     </select>
                     <!-- mensajes para validacion select -->
